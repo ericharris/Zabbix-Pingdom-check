@@ -21,23 +21,29 @@ I have setup Zabbix to pass these parameters to the check script, as shown below
 You will need to get an App-Key from your Pingdom account, and obtain the check's ID number.
 
 To get an application key, you'll need to go to "Sharing", and then "The Pingdom API" where you can add keys.
+
 ![Pingdom App-Key](http://ericharris.github.io/repositories/Zabbix-Pingdom-check/images/PingdomAppKey.png)
 
 To get your check's ID number, you can edit the check and see the ID in the URL.
+
 ![Pingdom Check ID](http://ericharris.github.io/repositories/Zabbix-Pingdom-check/images/PingdomFetchCheckID.png)
 
 ## Zabbix Setup
 To get the check working in Zabbix, I set it up as a new Host.
+
 ![Zabbix Host Config](http://ericharris.github.io/repositories/Zabbix-Pingdom-check/images/ZabbixHostConfig.png)
 
 Setup Macros on the host so that you can save and pass the URL, AppKey, username and password arguments.
+
 ![Zabbix Macros](http://ericharris.github.io/repositories/Zabbix-Pingdom-check/images/ZabbixMacros.png)
 
 You can then setup an external check item for each service check you want to monitor. Here's the string I used for the key value. Note that you need to set the check ID value after "-i" manually.
 ```bash
 check_pingdom.py["-u","{$PINGDOM_URL}","-i","00000","-k","{$PINGDOM_APPKEY}","-a","{$PINGDOM_USER}","-p","{$PINGDOM_PASSWORD}"]
 ```
+
 ![Zabbix Item](http://ericharris.github.io/repositories/Zabbix-Pingdom-check/images/ZabbixItem.png)
 
 And finally, the trigger can be setup. The script returns the status text, so set it to trigger on anything other than "up".
+
 ![Zabbix Trigger](http://ericharris.github.io/repositories/Zabbix-Pingdom-check/images/ZabbixTrigger.png)
